@@ -17,8 +17,7 @@
           title: 'Distribuição de Atividades',
           titleTextStyle: {
             fontSize: 16,
-            bold: true,
-            alignment: 'center'
+            bold: true
           },
           chartArea: { width: '100%', height: '75%' },
           legend: { position: 'bottom', textStyle: { fontSize: 12 } },
@@ -43,8 +42,7 @@
           title: 'Segmentação das Reuniões',
           titleTextStyle: {
             fontSize: 16,
-            bold: true,
-            alignment: 'center'
+            bold: true
           },
           chartArea: { width: '100%', height: '75%' },
           legend: { position: 'bottom', textStyle: { fontSize: 12 } },
@@ -69,8 +67,7 @@
           title: 'Reuniões por Setor',
           titleTextStyle: {
             fontSize: 16,
-            bold: true,
-            alignment: 'center'
+            bold: true
           },
           chartArea: { width: '100%', height: '75%' },
           legend: { position: 'bottom', textStyle: { fontSize: 12 } },
@@ -93,7 +90,7 @@
         ]);
 
         var columnOptions = {
-          title: 'Dias por cidade',
+          title: 'Dias em cada cidade',
           titleTextStyle: {
             fontSize: 16,
             bold: true
@@ -101,7 +98,7 @@
           chartArea: { width: '100%', height: '75%' },
           legend: { position: 'none' },
           hAxis: {
-            title:
+            title: 'Cidade'
           },
           vAxis: {
             title: 'Dias'
@@ -129,13 +126,17 @@
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
-        gap: 15px;
+        gap: 8px;
         margin-bottom: 8px;
       }
 
       .chart-box {
         width: 320px;
         height: 320px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
       }
 
       .column-box {
