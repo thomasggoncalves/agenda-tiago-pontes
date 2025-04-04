@@ -1,117 +1,85 @@
-<html>
-  <head>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-      google.charts.load("current", {packages:["corechart"]});
-      google.charts.setOnLoadCallback(drawCharts);
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>Agenda - Tiago Pontes</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      text-align: center;
+      margin: 0;
+    }
+    h1 {
+      margin-bottom: 30px;
+    }
+    .tab-buttons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .tab-buttons button {
+      padding: 10px 20px;
+      cursor: pointer;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      transition: background-color 0.2s;
+    }
+    .tab-buttons button:hover {
+      background-color: #0056b3;
+    }
+    .tab-buttons button.active {
+      background-color: #0056b3;
+    }
+    .tab-content {
+      display: none;
+      width: 100%;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    iframe {
+      width: 100%;
+      max-width: 1100px;
+      height: 750px;
+      border: none;
+    }
+  </style>
+</head>
+<body>
 
-      function drawCharts() {
-        // Gráfico de Pizza Principal
-        var pieData = google.visualization.arrayToDataTable([
-          ['Tipo', 'Quantidade'],
-          ['Reuniões', 19],
-          ['Tarefas Rotineiras', 22]
-        ]);
+  <h1>Agenda de Atividades - Tiago Pontes</h1>
 
-        var pieOptions = {
-          title: 'Distribuição de Atividades',
-          titleTextStyle: {
-            fontSize: 16,
-            bold: true
-          },
-          chartArea: { width: '90%', height: '80%' },
-          legend: { position: 'bottom', textStyle: { fontSize: 12 } },
-          pieHole: 0.4,
-          slices: {
-            0: { color: '#1f77b4' },
-            1: { color: '#2ca02c' }
-          }
-        };
+  <div class="tab-buttons">
+    <button onclick="showTab('janeiro')" class="active">Janeiro</button>
+    <button onclick="showTab('fevereiro')">Fevereiro</button>
+  </div>
 
-        var pieChart = new google.visualization.PieChart(document.getElementById('donutchart'));
-        pieChart.draw(pieData, pieOptions);
+  <div id="janeiro" class="tab-content active">
+    <iframe src="janeiro.html"></iframe>
+  </div>
 
-        // Gráfico de Pizza Secundário para Segmentação das Reuniões
-        var pieReuniaoData = google.visualization.arrayToDataTable([
-          ['Tipo de Reunião', 'Quantidade'],
-          ['Virtuais', 4],
-          ['Presenciais', 15]
-        ]);
+  <div id="fevereiro" class="tab-content">
+    <iframe src="fevereiro.html"></iframe>
+  </div>
 
-        var pieReuniaoOptions = {
-          title: 'Segmentação das Reuniões',
-          titleTextStyle: {
-            fontSize: 16,
-            bold: true
-          },
-          chartArea: { width: '90%', height: '80%' },
-          legend: { position: 'bottom', textStyle: { fontSize: 12 } },
-          pieHole: 0.4,
-          slices: {
-            0: { color: '#6baed6' },
-            1: { color: '#0b3c68' }
-          }
-        };
+  <script>
+    function showTab(tabId) {
+      const tabs = document.querySelectorAll('.tab-content');
+      const buttons = document.querySelectorAll('.tab-buttons button');
 
-        var pieReuniaoChart = new google.visualization.PieChart(document.getElementById('reuniaoChart'));
-        pieReuniaoChart.draw(pieReuniaoData, pieReuniaoOptions);
+      tabs.forEach(tab => tab.classList.remove('active'));
+      buttons.forEach(btn => btn.classList.remove('active'));
 
-        // Gráfico de Colunas
-        var columnData = google.visualization.arrayToDataTable([
-          ['Cidade', 'Dias', { role: 'style' }],
-          ['São Paulo', 0, '#1b9e77'],
-          ['Brasília', 6, '#d95f02'],
-          ['Recife', 10, '#7570b3']
-        ]);
+      document.getElementById(tabId).classList.add('active');
+      event.target.classList.add('active');
+    }
+  </script>
 
-        var columnOptions = {
-          title: 'Dias em cada cidade',
-          titleTextStyle: {
-            fontSize: 16,
-            bold: true
-          },
-          chartArea: { width: '80%', height: '70%' },
-          legend: { position: 'none' },
-          hAxis: {
-            title: 'Cidade'
-          },
-          vAxis: {
-            title: 'Dias'
-          }
-        };
-
-        var columnChart = new google.visualization.ColumnChart(document.getElementById('columnchart'));
-        columnChart.draw(columnData, columnOptions);
-      }
-    </script>
-    <style>
-      body {
-        margin: 0;
-        padding: 0;
-        font-family: Arial, sans-serif;
-      }
-
-      .charts-row {
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-        flex-wrap: wrap;
-        margin-bottom: 4px;
-      }
-
-      .chart-box {
-        width: 480px;
-        height: 370px;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="charts-row">
-      <div id="donutchart" class="chart-box"></div>
-      <div id="reuniaoChart" class="chart-box"></div>
-    </div>
-    <div class="charts-row">
-      <div id="columnchart" class="chart-box"></div>
-    </div>
-  </body>
+</body>
 </html>
