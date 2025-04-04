@@ -56,6 +56,31 @@
         var pieReuniaoChart = new google.visualization.PieChart(document.getElementById('reuniaoChart'));
         pieReuniaoChart.draw(pieReuniaoData, pieReuniaoOptions);
 
+        // Gráfico de Reuniões por Setor
+        var setorData = google.visualization.arrayToDataTable([
+          ['Setor', 'Quantidade'],
+          ['Administrativo', 0],
+          ['Jurídico', 2]
+        ]);
+
+        var setorOptions = {
+          title: 'Reuniões por Setor',
+          titleTextStyle: {
+            fontSize: 16,
+            bold: true
+          },
+          chartArea: { width: '90%', height: '80%' },
+          legend: { position: 'bottom', textStyle: { fontSize: 12 } },
+          pieHole: 0.4,
+          slices: {
+            0: { color: '#9ecae1' },
+            1: { color: '#3182bd' }
+          }
+        };
+
+        var setorChart = new google.visualization.PieChart(document.getElementById('setorChart'));
+        setorChart.draw(setorData, setorOptions);
+
         // Gráfico de Colunas
         var columnData = google.visualization.arrayToDataTable([
           ['Cidade', 'Dias', { role: 'style' }],
@@ -82,31 +107,6 @@
 
         var columnChart = new google.visualization.ColumnChart(document.getElementById('columnchart'));
         columnChart.draw(columnData, columnOptions);
-
-        // Gráfico de Reuniões por Setor
-        var setorData = google.visualization.arrayToDataTable([
-          ['Setor', 'Quantidade'],
-          ['Administrativo', 0],
-          ['Jurídico', 2]
-        ]);
-
-        var setorOptions = {
-          title: 'Reuniões por Setor',
-          titleTextStyle: {
-            fontSize: 16,
-            bold: true
-          },
-          chartArea: { width: '90%', height: '80%' },
-          legend: { position: 'bottom', textStyle: { fontSize: 12 } },
-          pieHole: 0.4,
-          slices: {
-            0: { color: '#9ecae1' },
-            1: { color: '#3182bd' }
-          }
-        };
-
-        var setorChart = new google.visualization.PieChart(document.getElementById('setorChart'));
-        setorChart.draw(setorData, setorOptions);
       }
     </script>
     <style>
@@ -134,12 +134,10 @@
     <div class="charts-row">
       <div id="donutchart" class="chart-box"></div>
       <div id="reuniaoChart" class="chart-box"></div>
+      <div id="setorChart" class="chart-box"></div>
     </div>
     <div class="charts-row">
       <div id="columnchart" class="chart-box"></div>
-    </div>
-    <div class="charts-row">
-      <div id="setorChart" class="chart-box"></div>
     </div>
   </body>
 </html>
