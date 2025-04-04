@@ -80,37 +80,27 @@
       }
     </script>
     <style>
-      .charts-container {
+      .charts-row {
         display: flex;
         justify-content: center;
-        gap: 8px;
-        margin-top: 10px;
-        flex-wrap: nowrap;
-        overflow-x: auto;
+        gap: 4px;
+        flex-wrap: wrap;
+        margin-bottom: 4px;
       }
-      .charts-container > div {
-        flex-shrink: 0;
-        margin: 0;
-      }
-      .info-container {
-        text-align: center;
-        font-size: 14px;
-        font-weight: bold;
-        margin-top: 10px;
+
+      .chart-box {
+        width: 420px;
+        height: 340px;
       }
     </style>
   </head>
   <body>
-    <div class="charts-container">
-      <div>
-        <div id="donutchart" style="width: 420px; height: 340px;"></div>
-      </div>
-      <div>
-        <div id="reuniaoChart" style="width: 420px; height: 340px;"></div>
-      </div>
-      <div>
-        <div id="columnchart" style="width: 420px; height: 340px;"></div>
-      </div>
+    <div class="charts-row">
+      <div id="donutchart" class="chart-box"></div>
+      <div id="reuniaoChart" class="chart-box"></div>
+    </div>
+    <div class="charts-row">
+      <div id="columnchart" class="chart-box"></div>
     </div>
   </body>
 </html>
