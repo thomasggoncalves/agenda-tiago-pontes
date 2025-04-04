@@ -116,28 +116,41 @@
         font-family: Arial, sans-serif;
       }
 
+      .charts-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
       .charts-row {
         display: flex;
         justify-content: center;
-        gap: 10px;
         flex-wrap: wrap;
-        margin-bottom: 4px;
+        gap: 8px;
+        margin-bottom: 8px;
       }
 
       .chart-box {
-        width: 480px;
-        height: 370px;
+        width: 360px;
+        height: 340px;
+      }
+
+      .column-box {
+        width: 1100px;
+        height: 420px;
       }
     </style>
   </head>
   <body>
-    <div class="charts-row">
-      <div id="donutchart" class="chart-box"></div>
-      <div id="reuniaoChart" class="chart-box"></div>
-      <div id="setorChart" class="chart-box"></div>
-    </div>
-    <div class="charts-row">
-      <div id="columnchart" class="chart-box"></div>
+    <div class="charts-container">
+      <div class="charts-row">
+        <div id="donutchart" class="chart-box"></div>
+        <div id="reuniaoChart" class="chart-box"></div>
+        <div id="setorChart" class="chart-box"></div>
+      </div>
+      <div class="charts-row">
+        <div id="columnchart" class="column-box"></div>
+      </div>
     </div>
   </body>
 </html>
