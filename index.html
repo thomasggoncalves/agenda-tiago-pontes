@@ -82,11 +82,14 @@
     <style>
       .charts-container {
         display: flex;
-        justify-content: center;
-        gap: 0px;
-        margin-top: 20px;
+        justify-content: space-between;
+        gap: 5px;
+        margin-top: 10px;
         flex-wrap: nowrap;
         overflow-x: auto;
+      }
+      .charts-container > div {
+        flex-shrink: 0;
       }
       .info-container {
         text-align: center;
@@ -99,13 +102,13 @@
   <body>
     <div class="charts-container">
       <div>
-        <div id="donutchart" style="width: 500px; height: 350px;"></div>
+        <div id="donutchart" style="width: 400px; height: 320px;"></div>
       </div>
       <div>
-        <div id="reuniaoChart" style="width: 500px; height: 350px;"></div>
+        <div id="reuniaoChart" style="width: 400px; height: 320px;"></div>
       </div>
       <div>
-        <div id="columnchart" style="width: 600px; height: 400px;"></div>
+        <div id="columnchart" style="width: 400px; height: 320px;"></div>
       </div>
     </div>
   </body>
