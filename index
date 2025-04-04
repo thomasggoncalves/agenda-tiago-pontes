@@ -16,7 +16,7 @@
         var pieOptions = {
           title: 'Distribuição de Atividades',
           titleTextStyle: {
-            fontSize: 18,
+            fontSize: 16,
             bold: true
           },
           pieHole: 0.4,
@@ -39,7 +39,7 @@
         var pieReuniaoOptions = {
           title: 'Segmentação das Reuniões',
           titleTextStyle: {
-            fontSize: 18,
+            fontSize: 16,
             bold: true
           },
           pieHole: 0.4,
@@ -63,7 +63,7 @@
         var columnOptions = {
           title: 'Dias em cada cidade',
           titleTextStyle: {
-            fontSize: 18,
+            fontSize: 16,
             bold: true
           },
           legend: { position: 'none' },
