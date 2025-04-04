@@ -1,0 +1,100 @@
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load("current", {packages:["corechart"]});
+      google.charts.setOnLoadCallback(drawCharts);
+
+      function drawCharts() {
+        // Gráfico de Pizza Principal
+        var pieData = google.visualization.arrayToDataTable([
+          ['Tipo', 'Quantidade'],
+          ['Reuniões', 11],
+          ['Tarefas Rotineiras', 4]
+        ]);
+
+        var pieOptions = {
+          title: 'Distribuição de Atividades',
+          pieHole: 0.4,
+          slices: {
+            0: { color: '#1f77b4' }, // Azul para Reuniões
+            1: { color: '#2ca02c' }  // Verde para Tarefas Rotineiras
+          }
+        };
+
+        var pieChart = new google.visualization.PieChart(document.getElementById('donutchart'));
+        pieChart.draw(pieData, pieOptions);
+
+        // Gráfico de Pizza Secundário para Segmentação das Reuniões
+        var pieReuniaoData = google.visualization.arrayToDataTable([
+          ['Tipo de Reunião', 'Quantidade'],
+          ['Virtuais', 6],
+          ['Presenciais', 5]
+        ]);
+
+        var pieReuniaoOptions = {
+          title: 'Segmentação das Reuniões',
+          pieHole: 0.4,
+          slices: {
+            0: { color: '#6baed6' }, // Azul claro para Virtuais
+            1: { color: '#0b3d91' }  // Azul bem escuro para Presenciais
+          }
+        };
+
+        var pieReuniaoChart = new google.visualization.PieChart(document.getElementById('reuniaoChart'));
+        pieReuniaoChart.draw(pieReuniaoData, pieReuniaoOptions);
+
+        // Gráfico de Colunas
+        var columnData = google.visualization.arrayToDataTable([
+          ['Cidade', 'Dias', { role: 'style' }],
+          ['São Paulo', 10, '#1b9e77'],
+          ['Brasília', 5, '#d95f02'],
+          ['Recife', 8, '#7570b3']
+        ]);
+
+        var columnOptions = {
+          title: 'Dias em cada cidade',
+          legend: { position: 'none' },
+          hAxis: {
+            title: 'Cidade'
+          },
+          vAxis: {
+            title: 'Dias'
+          }
+        };
+
+        var columnChart = new google.visualization.ColumnChart(document.getElementById('columnchart'));
+        columnChart.draw(columnData, columnOptions);
+      }
+    </script>
+    <style>
+      .charts-container {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        flex-wrap: wrap;
+        margin-top: 30px;
+      }
+      .info-container {
+        text-align: center;
+        font-size: 14px;
+        font-weight: bold;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="charts-container">
+      <div>
+        <div id="donutchart" style="width: 400px; height: 300px;"></div>
+      </div>
+      <div>
+        <div id="reuniaoChart" style="width: 400px; height: 300px;"></div>
+      </div>
+    </div>
+    <div class="charts-container">
+      <div id="columnchart" style="width: 600px; height: 400px;"></div>
+    </div>
+  </body>
+</html>
+
