@@ -21,8 +21,8 @@
           },
           pieHole: 0.4,
           slices: {
-            0: { color: '#1f77b4' }, // Azul para Reuniões
-            1: { color: '#2ca02c' }  // Verde para Tarefas Rotineiras
+            0: { color: '#1f77b4' },
+            1: { color: '#2ca02c' }
           }
         };
 
@@ -44,8 +44,8 @@
           },
           pieHole: 0.4,
           slices: {
-            0: { color: '#6baed6' }, // Azul claro para Virtuais
-            1: { color: '#08306b' }  // Azul bem escuro (mais diferente) para Presenciais
+            0: { color: '#6baed6' },
+            1: { color: '#08306b' }
           }
         };
 
@@ -83,9 +83,10 @@
       .charts-container {
         display: flex;
         justify-content: center;
-        gap: 10px; /* Espaçamento entre todos os gráficos */
-        flex-wrap: wrap;
+        gap: 15px;
         margin-top: 20px;
+        flex-wrap: nowrap;
+        overflow-x: auto;
       }
       .info-container {
         text-align: center;
@@ -109,3 +110,4 @@
     </div>
   </body>
 </html>
+
