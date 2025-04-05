@@ -1,90 +1,176 @@
 <!DOCTYPE html>
-<html lang="pt">
-<head>
-  <meta charset="UTF-8">
-  <title>Agenda - Tiago Pontes</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      text-align: center;
-      margin: 0;
-    }
-    h1 {
-      margin-bottom: 30px;
-    }
-    .tab-buttons {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-    .tab-buttons button {
-      padding: 10px 20px;
-      cursor: pointer;
-      background-color: #007BFF;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      transition: background-color 0.2s;
-    }
-    .tab-buttons button:hover {
-      background-color: #0056b3;
-    }
-    .tab-buttons button.active {
-      background-color: #0056b3;
-    }
-    .tab-content {
-      display: none;
-      width: 100%;
-    }
-    .tab-content.active {
-      display: block;
-    }
-    iframe {
-      width: 100%;
-      max-width: 1100px;
-      height: 750px;
-      border: none;
-    }
-  </style>
-</head>
-<body>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Agenda - Tiago Pontes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-  <h1>Agenda de Atividades - Tiago Pontes</h1>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+      }
 
-  <div class="tab-buttons">
-    <button onclick="showTab('janeiro')" class="active">Janeiro</button>
-    <button onclick="showTab('fevereiro')">Fevereiro</button>
-    <button onclick="showTab('marco')">Março</button>
-  </div>
+      .logo-container {
+        display: flex;
+        justify-content: center;
+        padding: 20px 0 0 0;
+      }
 
-  <div id="janeiro" class="tab-content active">
-    <iframe src="janeiro.html"></iframe>
-  </div>
+      .logo-container img {
+        height: 80px;
+      }
 
-  <div id="fevereiro" class="tab-content">
-    <iframe src="fevereiro.html"></iframe>
-  </div>
+      .charts-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+      }
 
-  <div id="marco" class="tab-content">
-    <iframe src="marco.html"></iframe>
-  </div>
+      .charts-row {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 16px;
+      }
 
-  <script>
-    function showTab(tabId) {
-      const tabs = document.querySelectorAll('.tab-content');
-      const buttons = document.querySelectorAll('.tab-buttons button');
+      .chart-box, .column-box {
+        width: 320px;
+        height: 340px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+      }
 
-      tabs.forEach(tab => tab.classList.remove('active'));
-      buttons.forEach(btn => btn.classList.remove('active'));
+      .chart-title {
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 8px;
+        text-align: center;
+      }
 
-      document.getElementById(tabId).classList.add('active');
-      event.target.classList.add('active');
-    }
-  </script>
+      .chart-title i {
+        margin-right: 6px;
+        color: #007BFF;
+      }
+    </style>
 
-</body>
+    <script type="text/javascript">
+      google.charts.load("current", {packages:["corechart"]});
+      google.charts.setOnLoadCallback(drawCharts);
+
+      function drawCharts() {
+        // Gráfico 1 - Distribuição de Atividades
+        var pieData = google.visualization.arrayToDataTable([
+          ['Tipo', 'Quantidade'],
+          ['Reuniões', 18],
+          ['Tarefas Rotineiras', 20]
+        ]);
+        var pieOptions = {
+          title: '',
+          chartArea: { left: '15%', width: '70%', height: '75%' },
+          legend: { position: 'bottom', textStyle: { fontSize: 12 } },
+          pieHole: 0.4,
+          slices: {
+            0: { color: '#1f77b4' },
+            1: { color: '#2ca02c' }
+          }
+        };
+        var pieChart = new google.visualization.PieChart(document.getElementById('donutchart'));
+        pieChart.draw(pieData, pieOptions);
+
+        // Gráfico 2 - Segmentação das Reuniões
+        var pieReuniaoData = google.visualization.arrayToDataTable([
+          ['Tipo de Reunião', 'Quantidade'],
+          ['Virtuais', 2],
+          ['Presenciais', 16]
+        ]);
+        var pieReuniaoOptions = {
+          title: '',
+          chartArea: { left: '15%', width: '70%', height: '75%' },
+          legend: { position: 'bottom', textStyle: { fontSize: 12 } },
+          pieHole: 0.4,
+          slices: {
+            0: { color: '#6baed6' },
+            1: { color: '#0b3c68' }
+          }
+        };
+        var pieReuniaoChart = new google.visualization.PieChart(document.getElementById('reuniaoChart'));
+        pieReuniaoChart.draw(pieReuniaoData, pieReuniaoOptions);
+
+        // Gráfico 3 - Reuniões por Setor
+        var setorData = google.visualization.arrayToDataTable([
+          ['Setor', 'Quantidade'],
+          ['Administrativo', 0],
+          ['Jurídico', 2]
+        ]);
+        var setorOptions = {
+          title: '',
+          chartArea: { left: '15%', width: '70%', height: '75%' },
+          legend: { position: 'bottom', textStyle: { fontSize: 12 } },
+          pieHole: 0.4,
+          slices: {
+            0: { color: '#fdae6b' },
+            1: { color: '#fd8d3c' }
+          }
+        };
+        var setorChart = new google.visualization.PieChart(document.getElementById('setorChart'));
+        setorChart.draw(setorData, setorOptions);
+
+        // Gráfico 4 - Dias por Cidade
+        var columnData = google.visualization.arrayToDataTable([
+          ['Cidade', 'Dias', { role: 'style' }],
+          ['São Paulo', 1, '#a6cee3'],
+          ['Brasília', 8, '#b2df8a'],
+          ['Recife', 9, '#fb9a99']
+        ]);
+        var columnOptions = {
+          title: '',
+          chartArea: { left: '15%', width: '70%', height: '60%' },
+          legend: { position: 'none' },
+          hAxis: { title: 'Cidade' },
+          vAxis: { title: 'Dias' }
+        };
+        var columnChart = new google.visualization.ColumnChart(document.getElementById('columnchart'));
+        columnChart.draw(columnData, columnOptions);
+      }
+    </script>
+  </head>
+
+  <body>
+    <div class="logo-container">
+      <img src="logo.png" alt="Logo do Escritório">
+    </div>
+
+    <div class="charts-container">
+      <div class="charts-row">
+        <div class="chart-box">
+          <div class="chart-title"><i class="fas fa-chart-pie"></i> Distribuição de Atividades</div>
+          <div id="donutchart"></div>
+        </div>
+
+        <div class="chart-box">
+          <div class="chart-title"><i class="fas fa-diagram-project"></i> Segmentação das Reuniões</div>
+          <div id="reuniaoChart"></div>
+        </div>
+
+        <div class="chart-box">
+          <div class="chart-title"><i class="fas fa-building"></i> Reuniões por Setor</div>
+          <div id="setorChart"></div>
+        </div>
+      </div>
+
+      <div class="charts-row">
+        <div class="column-box">
+          <div class="chart-title"><i class="fas fa-map-marker-alt"></i> Dias por cidade</div>
+          <div id="columnchart"></div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
