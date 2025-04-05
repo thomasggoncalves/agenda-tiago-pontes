@@ -56,36 +56,4 @@
   <h1>Agenda de Atividades - Tiago Pontes</h1>
 
   <div class="tab-buttons">
-    <button onclick="showTab('janeiro', event)" class="active">Janeiro</button>
-    <button onclick="showTab('fevereiro', event)">Fevereiro</button>
-  </div>
-
-  <div id="janeiro" class="tab-content active">
-    <iframe src="janeiro.html" id="iframe-janeiro"></iframe>
-  </div>
-
-  <div id="fevereiro" class="tab-content">
-    <iframe src="fevereiro.html" id="iframe-fevereiro"></iframe>
-  </div>
-
-  <script>
-    function showTab(tabId, event) {
-      const tabs = document.querySelectorAll('.tab-content');
-      const buttons = document.querySelectorAll('.tab-buttons button');
-
-      tabs.forEach(tab => tab.classList.remove('active'));
-      buttons.forEach(btn => btn.classList.remove('active'));
-
-      const selectedTab = document.getElementById(tabId);
-      selectedTab.classList.add('active');
-      event.target.classList.add('active');
-
-      // Força o reload do iframe
-      const iframe = selectedTab.querySelector('iframe');
-      const src = iframe.getAttribute('src');
-      iframe.setAttribute('src', src);
-    }
-  </script>
-
-</body>
-</html>
+    <button onclick="
