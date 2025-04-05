@@ -56,4 +56,35 @@
   <h1>Agenda de Atividades - Tiago Pontes</h1>
 
   <div class="tab-buttons">
-    <button onclick="
+    <button onclick="showTab('janeiro')" class="active">Janeiro</button>
+    <button onclick="showTab('fevereiro')">Fevereiro</button>
+    <button onclick="showTab('marco')">Março</button>
+  </div>
+
+  <div id="janeiro" class="tab-content active">
+    <iframe src="janeiro.html"></iframe>
+  </div>
+
+  <div id="fevereiro" class="tab-content">
+    <iframe src="fevereiro.html"></iframe>
+  </div>
+
+  <div id="marco" class="tab-content">
+    <iframe src="marco.html"></iframe>
+  </div>
+
+  <script>
+    function showTab(tabId) {
+      const tabs = document.querySelectorAll('.tab-content');
+      const buttons = document.querySelectorAll('.tab-buttons button');
+
+      tabs.forEach(tab => tab.classList.remove('active'));
+      buttons.forEach(btn => btn.classList.remove('active'));
+
+      document.getElementById(tabId).classList.add('active');
+      event.target.classList.add('active');
+    }
+  </script>
+
+</body>
+</html>
