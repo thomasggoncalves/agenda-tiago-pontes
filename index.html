@@ -7,9 +7,9 @@
   <style>
     body {
       font-family: Arial, sans-serif;
+      margin: 0;
       padding: 20px;
       text-align: center;
-      margin: 0;
     }
 
     .logo-container {
@@ -45,16 +45,14 @@
       transition: background-color 0.2s;
     }
 
-    .tab-buttons button:hover {
-      background-color: #0056b3;
-    }
-
+    .tab-buttons button:hover,
     .tab-buttons button.active {
       background-color: #0056b3;
     }
 
     .tab-content {
       display: none;
+      width: 100%;
     }
 
     .tab-content.active {
@@ -97,12 +95,12 @@
   <div id="janeiro" class="tab-content active">
     <div class="charts-container">
       <div class="charts-row">
-        <div id="donutchart-jan" class="chart-box"></div>
-        <div id="reuniaoChart-jan" class="chart-box"></div>
-        <div id="setorChart-jan" class="chart-box"></div>
+        <div id="jan-donutchart" class="chart-box"></div>
+        <div id="jan-reuniaoChart" class="chart-box"></div>
+        <div id="jan-setorChart" class="chart-box"></div>
       </div>
       <div class="charts-row">
-        <div id="columnchart-jan" class="column-box"></div>
+        <div id="jan-columnchart" class="column-box"></div>
       </div>
     </div>
   </div>
@@ -110,12 +108,12 @@
   <div id="fevereiro" class="tab-content">
     <div class="charts-container">
       <div class="charts-row">
-        <div id="donutchart-fev" class="chart-box"></div>
-        <div id="reuniaoChart-fev" class="chart-box"></div>
-        <div id="setorChart-fev" class="chart-box"></div>
+        <div id="fev-donutchart" class="chart-box"></div>
+        <div id="fev-reuniaoChart" class="chart-box"></div>
+        <div id="fev-setorChart" class="chart-box"></div>
       </div>
       <div class="charts-row">
-        <div id="columnchart-fev" class="column-box"></div>
+        <div id="fev-columnchart" class="column-box"></div>
       </div>
     </div>
   </div>
@@ -123,86 +121,138 @@
   <div id="marco" class="tab-content">
     <div class="charts-container">
       <div class="charts-row">
-        <div id="donutchart-mar" class="chart-box"></div>
-        <div id="reuniaoChart-mar" class="chart-box"></div>
-        <div id="setorChart-mar" class="chart-box"></div>
+        <div id="mar-donutchart" class="chart-box"></div>
+        <div id="mar-reuniaoChart" class="chart-box"></div>
+        <div id="mar-setorChart" class="chart-box"></div>
       </div>
       <div class="charts-row">
-        <div id="columnchart-mar" class="column-box"></div>
+        <div id="mar-columnchart" class="column-box"></div>
       </div>
     </div>
   </div>
 
   <script>
-    google.charts.load("current", { packages: ["corechart"] });
-    google.charts.setOnLoadCallback(drawCharts);
-
     function showTab(tabId) {
-      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-      document.querySelectorAll('.tab-buttons button').forEach(btn => btn.classList.remove('active'));
+      const tabs = document.querySelectorAll('.tab-content');
+      const buttons = document.querySelectorAll('.tab-buttons button');
+
+      tabs.forEach(tab => tab.classList.remove('active'));
+      buttons.forEach(btn => btn.classList.remove('active'));
+
       document.getElementById(tabId).classList.add('active');
       event.target.classList.add('active');
     }
 
-    function drawCharts() {
-      drawJaneiro();
-      drawFevereiro();
-      drawMarco();
-    }
+    google.charts.load("current", {packages:["corechart"]});
+    google.charts.setOnLoadCallback(drawAllCharts);
 
-    function drawJaneiro() {
-      const options = {
-        pie: { hole: 0.4 },
-        chartArea: { left: '15%', width: '70%', height: '75%' },
-        legend: { position: 'bottom', textStyle: { fontSize: 12 } },
-        titleTextStyle: { fontSize: 16, bold: true }
-      };
-
-      const chart1 = new google.visualization.PieChart(document.getElementById('donutchart-jan'));
-      chart1.draw(google.visualization.arrayToDataTable([
-        ['Tipo', 'Quantidade'],
+    function drawAllCharts() {
+      // --------- JANEIRO ----------
+      drawDonut('jan-donutchart', 'Distribuição de Atividades', [
         ['Reuniões', 20],
         ['Tarefas Rotineiras', 28]
-      ]), { ...options, title: 'Distribuição de Atividades - Janeiro', colors: ['#1f77b4', '#2ca02c'] });
+      ], ['#1f77b4', '#2ca02c']);
 
-      const chart2 = new google.visualization.PieChart(document.getElementById('reuniaoChart-jan'));
-      chart2.draw(google.visualization.arrayToDataTable([
-        ['Tipo de Reunião', 'Quantidade'],
+      drawDonut('jan-reuniaoChart', 'Segmentação das Reuniões', [
         ['Virtuais', 12],
         ['Presenciais', 8]
-      ]), { ...options, title: 'Segmentação das Reuniões', colors: ['#6baed6', '#0b3c68'] });
+      ], ['#6baed6', '#0b3c68']);
 
-      const chart3 = new google.visualization.PieChart(document.getElementById('setorChart-jan'));
-      chart3.draw(google.visualization.arrayToDataTable([
-        ['Setor', 'Quantidade'],
-        ['Administrativo', 2],
-        ['Jurídico', 3]
-      ]), { ...options, title: 'Reuniões por Setor', colors: ['#fdae6b', '#fd8d3c'] });
+      drawDonut('jan-setorChart', 'Reuniões por Setor', [
+        ['Administrativo', 3],
+        ['Jurídico', 2]
+      ], ['#fdae6b', '#fd8d3c']);
 
-      const chart4 = new google.visualization.ColumnChart(document.getElementById('columnchart-jan'));
-      chart4.draw(google.visualization.arrayToDataTable([
-        ['Cidade', 'Dias', { role: 'style' }],
-        ['São Paulo', 5, '#a6cee3'],
+      drawColumn('jan-columnchart', 'Dias por cidade', [
+        ['São Paulo', 2, '#a6cee3'],
         ['Brasília', 6, '#b2df8a'],
-        ['Recife', 4, '#fb9a99']
-      ]), {
-        title: 'Dias por cidade',
+        ['Recife', 5, '#fb9a99']
+      ]);
+
+      // --------- FEVEREIRO ----------
+      drawDonut('fev-donutchart', 'Distribuição de Atividades', [
+        ['Reuniões', 18],
+        ['Tarefas Rotineiras', 25]
+      ], ['#1f77b4', '#2ca02c']);
+
+      drawDonut('fev-reuniaoChart', 'Segmentação das Reuniões', [
+        ['Virtuais', 11],
+        ['Presenciais', 7]
+      ], ['#6baed6', '#0b3c68']);
+
+      drawDonut('fev-setorChart', 'Reuniões por Setor', [
+        ['Administrativo', 2],
+        ['Jurídico', 1]
+      ], ['#fdae6b', '#fd8d3c']);
+
+      drawColumn('fev-columnchart', 'Dias por cidade', [
+        ['São Paulo', 1, '#a6cee3'],
+        ['Brasília', 4, '#b2df8a'],
+        ['Recife', 6, '#fb9a99']
+      ]);
+
+      // --------- MARÇO ----------
+      drawDonut('mar-donutchart', 'Distribuição de Atividades', [
+        ['Reuniões', 24],
+        ['Tarefas Rotineiras', 31]
+      ], ['#1f77b4', '#2ca02c']);
+
+      drawDonut('mar-reuniaoChart', 'Segmentação das Reuniões', [
+        ['Virtuais', 14],
+        ['Presenciais', 10]
+      ], ['#6baed6', '#0b3c68']);
+
+      drawDonut('mar-setorChart', 'Reuniões por Setor', [
+        ['Administrativo', 1],
+        ['Jurídico', 0]
+      ], ['#fdae6b', '#fd8d3c']);
+
+      drawColumn('mar-columnchart', 'Dias por cidade', [
+        ['São Paulo', 3, '#a6cee3'],
+        ['Brasília', 8, '#b2df8a'],
+        ['Recife', 10, '#fb9a99']
+      ]);
+    }
+
+    function drawDonut(containerId, title, dataArr, colors) {
+      const data = google.visualization.arrayToDataTable([
+        ['Tipo', 'Quantidade'],
+        ...dataArr
+      ]);
+
+      const options = {
+        title: title,
+        titleTextStyle: { fontSize: 16, bold: true, color: '#000' },
+        chartArea: { left: '15%', width: '70%', height: '75%' },
+        legend: { position: 'bottom', textStyle: { fontSize: 12 } },
+        pieHole: 0.4,
+        slices: {
+          0: { color: colors[0] },
+          1: { color: colors[1] }
+        }
+      };
+
+      const chart = new google.visualization.PieChart(document.getElementById(containerId));
+      chart.draw(data, options);
+    }
+
+    function drawColumn(containerId, title, rows) {
+      const data = google.visualization.arrayToDataTable([
+        ['Cidade', 'Dias', { role: 'style' }],
+        ...rows
+      ]);
+
+      const options = {
+        title: title,
+        titleTextStyle: { fontSize: 16, bold: true, color: '#000' },
         chartArea: { left: '15%', width: '70%', height: '60%' },
         legend: 'none',
-        titleTextStyle: { fontSize: 16, bold: true },
         hAxis: { title: 'Cidade' },
         vAxis: { title: 'Dias' }
-      });
-    }
+      };
 
-    function drawFevereiro() {
-      // Idem ao drawJaneiro com os dados de fevereiro
-      // (se quiser que eu preencha também já com os dados e cores, posso fazer em seguida!)
-    }
-
-    function drawMarco() {
-      // Idem ao drawJaneiro com os dados de março
-      // (próxima etapa!)
+      const chart = new google.visualization.ColumnChart(document.getElementById(containerId));
+      chart.draw(data, options);
     }
   </script>
 </body>
