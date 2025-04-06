@@ -88,9 +88,9 @@
   <h1>Agenda de Atividades - Tiago Pontes</h1>
 
   <div class="tab-buttons">
-    <button onclick="showTab('janeiro')" class="active">Janeiro</button>
-    <button onclick="showTab('fevereiro')">Fevereiro</button>
-    <button onclick="showTab('marco')">Março</button>
+    <button onclick="showTab('janeiro', this)" class="active">Janeiro</button>
+    <button onclick="showTab('fevereiro', this)">Fevereiro</button>
+    <button onclick="showTab('marco', this)">Março</button>
   </div>
 
   <div id="janeiro" class="tab-content active">
@@ -119,7 +119,19 @@
   </div>
 
   <script>
-    function showTab(tabId) {
+    let chartsDrawn = {
+      janeiro: false,
+      fevereiro: false,
+      marco: false
+    };
+
+    google.charts.load("current", {packages:["corechart"]});
+    google.charts.setOnLoadCallback(() => {
+      drawJaneiro();
+      chartsDrawn.janeiro = true;
+    });
+
+    function showTab(tabId, button) {
       const tabs = document.querySelectorAll('.tab-content');
       const buttons = document.querySelectorAll('.tab-buttons button');
 
@@ -127,24 +139,126 @@
       buttons.forEach(btn => btn.classList.remove('active'));
 
       document.getElementById(tabId).classList.add('active');
-      event.target.classList.add('active');
+      button.classList.add('active');
 
-      drawCharts(); // redesenha os gráficos sempre que muda de aba
+      if (!chartsDrawn[tabId]) {
+        if (tabId === 'fevereiro') drawFevereiro();
+        else if (tabId === 'marco') drawMarco();
+        chartsDrawn[tabId] = true;
+      }
     }
 
-    google.charts.load("current", {packages:["corechart"]});
-    google.charts.setOnLoadCallback(drawCharts);
-
-    function drawCharts() {
-      // Janeiro
-      const janData1 = google.visualization.arrayToDataTable([
+    function drawJaneiro() {
+      const data1 = google.visualization.arrayToDataTable([
         ['Tipo', 'Quantidade'],
         ['Reuniões', 14],
         ['Tarefas Rotineiras', 26]
       ]);
-
-      const janOptions1 = {
+      const chart1 = new google.visualization.PieChart(document.getElementById('jan_chart1'));
+      chart1.draw(data1, {
         title: 'Distribuição de Atividades - Janeiro',
         pieHole: 0.4,
         chartArea: { width: '70%', height: '75%' },
-        legend: { position: 'bottom
+        legend: { position: 'bottom' }
+      });
+
+      const data2 = google.visualization.arrayToDataTable([
+        ['Tipo de Reunião', 'Quantidade'],
+        ['Virtuais', 10],
+        ['Presenciais', 4]
+      ]);
+      const chart2 = new google.visualization.PieChart(document.getElementById('jan_chart2'));
+      chart2.draw(data2, {
+        title: 'Segmentação das Reuniões - Janeiro',
+        pieHole: 0.4,
+        chartArea: { width: '70%', height: '75%' },
+        legend: { position: 'bottom' }
+      });
+    }
+
+    function drawFevereiro() {
+      const data1 = google.visualization.arrayToDataTable([
+        ['Tipo', 'Quantidade'],
+        ['Reuniões', 20],
+        ['Tarefas Rotineiras', 24]
+      ]);
+      const chart1 = new google.visualization.PieChart(document.getElementById('fev_chart1'));
+      chart1.draw(data1, {
+        title: 'Distribuição de Atividades - Fevereiro',
+        pieHole: 0.4,
+        chartArea: { width: '70%', height: '75%' },
+        legend: { position: 'bottom' }
+      });
+
+      const data2 = google.visualization.arrayToDataTable([
+        ['Tipo de Reunião', 'Quantidade'],
+        ['Virtuais', 12],
+        ['Presenciais', 8]
+      ]);
+      const chart2 = new google.visualization.PieChart(document.getElementById('fev_chart2'));
+      chart2.draw(data2, {
+        title: 'Segmentação das Reuniões - Fevereiro',
+        pieHole: 0.4,
+        chartArea: { width: '70%', height: '75%' },
+        legend: { position: 'bottom' }
+      });
+    }
+
+    function drawMarco() {
+      const marcoData = google.visualization.arrayToDataTable([
+        ['Tipo', 'Quantidade'],
+        ['Reuniões', 24],
+        ['Tarefas Rotineiras', 31]
+      ]);
+      const marcoChart = new google.visualization.PieChart(document.getElementById('marco_donutchart'));
+      marcoChart.draw(marcoData, {
+        title: 'Distribuição de Atividades - Março',
+        pieHole: 0.4,
+        chartArea: { width: '70%', height: '75%' },
+        legend: { position: 'bottom' }
+      });
+
+      const reuniaoData = google.visualization.arrayToDataTable([
+        ['Tipo de Reunião', 'Quantidade'],
+        ['Virtuais', 14],
+        ['Presenciais', 10]
+      ]);
+      const reuniaoChart = new google.visualization.PieChart(document.getElementById('marco_reuniaoChart'));
+      reuniaoChart.draw(reuniaoData, {
+        title: 'Segmentação das Reuniões - Março',
+        pieHole: 0.4,
+        chartArea: { width: '70%', height: '75%' },
+        legend: { position: 'bottom' }
+      });
+
+      const setorData = google.visualization.arrayToDataTable([
+        ['Setor', 'Quantidade'],
+        ['Administrativo', 1],
+        ['Jurídico', 0]
+      ]);
+      const setorChart = new google.visualization.PieChart(document.getElementById('marco_setorChart'));
+      setorChart.draw(setorData, {
+        title: 'Reuniões por Setor - Março',
+        pieHole: 0.4,
+        chartArea: { width: '70%', height: '75%' },
+        legend: { position: 'bottom' }
+      });
+
+      const columnData = google.visualization.arrayToDataTable([
+        ['Cidade', 'Dias', { role: 'style' }],
+        ['São Paulo', 3, '#a6cee3'],
+        ['Brasília', 8, '#b2df8a'],
+        ['Recife', 10, '#fb9a99']
+      ]);
+      const columnChart = new google.visualization.ColumnChart(document.getElementById('marco_columnchart'));
+      columnChart.draw(columnData, {
+        title: 'Dias por cidade - Março',
+        chartArea: { width: '70%', height: '60%' },
+        legend: { position: 'none' },
+        hAxis: { title: 'Cidade' },
+        vAxis: { title: 'Dias' }
+      });
+    }
+  </script>
+</body>
+</html>
