@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <title>Agenda - Tiago Pontes</title>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
       padding: 20px;
-      text-align: center;
       margin: 0;
+      text-align: center;
     }
 
     .logo-container {
@@ -54,18 +55,28 @@
 
     .tab-content {
       display: none;
-      width: 100%;
     }
 
     .tab-content.active {
       display: block;
     }
 
-    iframe {
-      width: 100%;
-      max-width: 1100px;
-      height: 750px;
-      border: none;
+    .charts-row {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .chart-box {
+      width: 320px;
+      height: 320px;
+    }
+
+    .column-box {
+      width: 320px;
+      height: 320px;
     }
   </style>
 </head>
@@ -77,45 +88,63 @@
   <h1>Agenda de Atividades - Tiago Pontes</h1>
 
   <div class="tab-buttons">
-    <button onclick="showTab('janeiro', event)" class="active">Janeiro</button>
-    <button onclick="showTab('fevereiro', event)">Fevereiro</button>
-    <button onclick="showTab('marco', event)">Março</button>
+    <button onclick="showTab('janeiro')" class="active">Janeiro</button>
+    <button onclick="showTab('fevereiro')">Fevereiro</button>
+    <button onclick="showTab('marco')">Março</button>
   </div>
 
   <div id="janeiro" class="tab-content active">
-    <iframe src="janeiro.html"></iframe>
+    <div class="charts-row">
+      <div id="jan_chart1" class="chart-box"></div>
+      <div id="jan_chart2" class="chart-box"></div>
+    </div>
   </div>
 
   <div id="fevereiro" class="tab-content">
-    <iframe src="fevereiro.html"></iframe>
+    <div class="charts-row">
+      <div id="fev_chart1" class="chart-box"></div>
+      <div id="fev_chart2" class="chart-box"></div>
+    </div>
   </div>
 
   <div id="marco" class="tab-content">
-    <iframe src="marco.html"></iframe>
+    <div class="charts-row">
+      <div id="marco_donutchart" class="chart-box"></div>
+      <div id="marco_reuniaoChart" class="chart-box"></div>
+      <div id="marco_setorChart" class="chart-box"></div>
+    </div>
+    <div class="charts-row">
+      <div id="marco_columnchart" class="column-box"></div>
+    </div>
   </div>
 
   <script>
-    function showTab(tabId, event) {
+    function showTab(tabId) {
       const tabs = document.querySelectorAll('.tab-content');
       const buttons = document.querySelectorAll('.tab-buttons button');
 
-      tabs.forEach(tab => {
-        tab.classList.remove('active');
-      });
-
+      tabs.forEach(tab => tab.classList.remove('active'));
       buttons.forEach(btn => btn.classList.remove('active'));
 
-      const selectedTab = document.getElementById(tabId);
-      selectedTab.classList.add('active');
-
-      // Recarrega o iframe ao ativar a aba
-      const iframe = selectedTab.querySelector('iframe');
-      if (iframe) {
-        iframe.src = iframe.src;
-      }
-
+      document.getElementById(tabId).classList.add('active');
       event.target.classList.add('active');
+
+      drawCharts(); // redesenha os gráficos sempre que muda de aba
     }
-  </script>
-</body>
-</html>
+
+    google.charts.load("current", {packages:["corechart"]});
+    google.charts.setOnLoadCallback(drawCharts);
+
+    function drawCharts() {
+      // Janeiro
+      const janData1 = google.visualization.arrayToDataTable([
+        ['Tipo', 'Quantidade'],
+        ['Reuniões', 14],
+        ['Tarefas Rotineiras', 26]
+      ]);
+
+      const janOptions1 = {
+        title: 'Distribuição de Atividades - Janeiro',
+        pieHole: 0.4,
+        chartArea: { width: '70%', height: '75%' },
+        legend: { position: 'bottom
