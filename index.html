@@ -3,13 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <title>Agenda - Tiago Pontes</title>
-  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 0;
       padding: 20px;
       text-align: center;
+      margin: 0;
     }
 
     .logo-container {
@@ -45,7 +44,10 @@
       transition: background-color 0.2s;
     }
 
-    .tab-buttons button:hover,
+    .tab-buttons button:hover {
+      background-color: #0056b3;
+    }
+
     .tab-buttons button.active {
       background-color: #0056b3;
     }
@@ -59,23 +61,11 @@
       display: block;
     }
 
-    .charts-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .charts-row {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 8px;
-    }
-
-    .chart-box, .column-box {
-      width: 320px;
-      height: 320px;
+    iframe {
+      width: 100%;
+      max-width: 1100px;
+      height: 750px;
+      border: none;
     }
   </style>
 </head>
@@ -93,42 +83,15 @@
   </div>
 
   <div id="janeiro" class="tab-content active">
-    <div class="charts-container">
-      <div class="charts-row">
-        <div id="jan-donutchart" class="chart-box"></div>
-        <div id="jan-reuniaoChart" class="chart-box"></div>
-        <div id="jan-setorChart" class="chart-box"></div>
-      </div>
-      <div class="charts-row">
-        <div id="jan-columnchart" class="column-box"></div>
-      </div>
-    </div>
+    <iframe src="janeiro.html"></iframe>
   </div>
 
   <div id="fevereiro" class="tab-content">
-    <div class="charts-container">
-      <div class="charts-row">
-        <div id="fev-donutchart" class="chart-box"></div>
-        <div id="fev-reuniaoChart" class="chart-box"></div>
-        <div id="fev-setorChart" class="chart-box"></div>
-      </div>
-      <div class="charts-row">
-        <div id="fev-columnchart" class="column-box"></div>
-      </div>
-    </div>
+    <iframe src="fevereiro.html"></iframe>
   </div>
 
   <div id="marco" class="tab-content">
-    <div class="charts-container">
-      <div class="charts-row">
-        <div id="mar-donutchart" class="chart-box"></div>
-        <div id="mar-reuniaoChart" class="chart-box"></div>
-        <div id="mar-setorChart" class="chart-box"></div>
-      </div>
-      <div class="charts-row">
-        <div id="mar-columnchart" class="column-box"></div>
-      </div>
-    </div>
+    <iframe src="marco.html"></iframe>
   </div>
 
   <script>
@@ -141,118 +104,6 @@
 
       document.getElementById(tabId).classList.add('active');
       event.target.classList.add('active');
-    }
-
-    google.charts.load("current", {packages:["corechart"]});
-    google.charts.setOnLoadCallback(drawAllCharts);
-
-    function drawAllCharts() {
-      // --------- JANEIRO ----------
-      drawDonut('jan-donutchart', 'Distribuição de Atividades', [
-        ['Reuniões', 20],
-        ['Tarefas Rotineiras', 28]
-      ], ['#1f77b4', '#2ca02c']);
-
-      drawDonut('jan-reuniaoChart', 'Segmentação das Reuniões', [
-        ['Virtuais', 12],
-        ['Presenciais', 8]
-      ], ['#6baed6', '#0b3c68']);
-
-      drawDonut('jan-setorChart', 'Reuniões por Setor', [
-        ['Administrativo', 3],
-        ['Jurídico', 2]
-      ], ['#fdae6b', '#fd8d3c']);
-
-      drawColumn('jan-columnchart', 'Dias por cidade', [
-        ['São Paulo', 2, '#a6cee3'],
-        ['Brasília', 6, '#b2df8a'],
-        ['Recife', 5, '#fb9a99']
-      ]);
-
-      // --------- FEVEREIRO ----------
-      drawDonut('fev-donutchart', 'Distribuição de Atividades', [
-        ['Reuniões', 18],
-        ['Tarefas Rotineiras', 25]
-      ], ['#1f77b4', '#2ca02c']);
-
-      drawDonut('fev-reuniaoChart', 'Segmentação das Reuniões', [
-        ['Virtuais', 11],
-        ['Presenciais', 7]
-      ], ['#6baed6', '#0b3c68']);
-
-      drawDonut('fev-setorChart', 'Reuniões por Setor', [
-        ['Administrativo', 2],
-        ['Jurídico', 1]
-      ], ['#fdae6b', '#fd8d3c']);
-
-      drawColumn('fev-columnchart', 'Dias por cidade', [
-        ['São Paulo', 1, '#a6cee3'],
-        ['Brasília', 4, '#b2df8a'],
-        ['Recife', 6, '#fb9a99']
-      ]);
-
-      // --------- MARÇO ----------
-      drawDonut('mar-donutchart', 'Distribuição de Atividades', [
-        ['Reuniões', 24],
-        ['Tarefas Rotineiras', 31]
-      ], ['#1f77b4', '#2ca02c']);
-
-      drawDonut('mar-reuniaoChart', 'Segmentação das Reuniões', [
-        ['Virtuais', 14],
-        ['Presenciais', 10]
-      ], ['#6baed6', '#0b3c68']);
-
-      drawDonut('mar-setorChart', 'Reuniões por Setor', [
-        ['Administrativo', 1],
-        ['Jurídico', 0]
-      ], ['#fdae6b', '#fd8d3c']);
-
-      drawColumn('mar-columnchart', 'Dias por cidade', [
-        ['São Paulo', 3, '#a6cee3'],
-        ['Brasília', 8, '#b2df8a'],
-        ['Recife', 10, '#fb9a99']
-      ]);
-    }
-
-    function drawDonut(containerId, title, dataArr, colors) {
-      const data = google.visualization.arrayToDataTable([
-        ['Tipo', 'Quantidade'],
-        ...dataArr
-      ]);
-
-      const options = {
-        title: title,
-        titleTextStyle: { fontSize: 16, bold: true, color: '#000' },
-        chartArea: { left: '15%', width: '70%', height: '75%' },
-        legend: { position: 'bottom', textStyle: { fontSize: 12 } },
-        pieHole: 0.4,
-        slices: {
-          0: { color: colors[0] },
-          1: { color: colors[1] }
-        }
-      };
-
-      const chart = new google.visualization.PieChart(document.getElementById(containerId));
-      chart.draw(data, options);
-    }
-
-    function drawColumn(containerId, title, rows) {
-      const data = google.visualization.arrayToDataTable([
-        ['Cidade', 'Dias', { role: 'style' }],
-        ...rows
-      ]);
-
-      const options = {
-        title: title,
-        titleTextStyle: { fontSize: 16, bold: true, color: '#000' },
-        chartArea: { left: '15%', width: '70%', height: '60%' },
-        legend: 'none',
-        hAxis: { title: 'Cidade' },
-        vAxis: { title: 'Dias' }
-      };
-
-      const chart = new google.visualization.ColumnChart(document.getElementById(containerId));
-      chart.draw(data, options);
     }
   </script>
 </body>
