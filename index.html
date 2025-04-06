@@ -44,7 +44,10 @@
       transition: background-color 0.2s;
     }
 
-    .tab-buttons button:hover,
+    .tab-buttons button:hover {
+      background-color: #0056b3;
+    }
+
     .tab-buttons button.active {
       background-color: #0056b3;
     }
@@ -60,8 +63,8 @@
 
     iframe {
       width: 100%;
-      height: 1000px;
       max-width: 1100px;
+      height: 750px;
       border: none;
     }
   </style>
@@ -74,9 +77,9 @@
   <h1>Agenda de Atividades - Tiago Pontes</h1>
 
   <div class="tab-buttons">
-    <button onclick="showTab('janeiro')" class="active">Janeiro</button>
-    <button onclick="showTab('fevereiro')">Fevereiro</button>
-    <button onclick="showTab('marco')">Março</button>
+    <button onclick="showTab('janeiro', event)" class="active">Janeiro</button>
+    <button onclick="showTab('fevereiro', event)">Fevereiro</button>
+    <button onclick="showTab('marco', event)">Março</button>
   </div>
 
   <div id="janeiro" class="tab-content active">
@@ -92,14 +95,25 @@
   </div>
 
   <script>
-    function showTab(tabId) {
+    function showTab(tabId, event) {
       const tabs = document.querySelectorAll('.tab-content');
       const buttons = document.querySelectorAll('.tab-buttons button');
 
-      tabs.forEach(tab => tab.classList.remove('active'));
+      tabs.forEach(tab => {
+        tab.classList.remove('active');
+      });
+
       buttons.forEach(btn => btn.classList.remove('active'));
 
-      document.getElementById(tabId).classList.add('active');
+      const selectedTab = document.getElementById(tabId);
+      selectedTab.classList.add('active');
+
+      // Recarrega o iframe ao ativar a aba
+      const iframe = selectedTab.querySelector('iframe');
+      if (iframe) {
+        iframe.src = iframe.src;
+      }
+
       event.target.classList.add('active');
     }
   </script>
