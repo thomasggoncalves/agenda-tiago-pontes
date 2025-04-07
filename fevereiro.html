@@ -1,7 +1,5 @@
-<!DOCTYPE html>
-<html lang="pt">
+<html>
   <head>
-    <meta charset="UTF-8" />
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
       google.charts.load("current", {packages:["corechart"]});
@@ -20,7 +18,8 @@
           titleTextStyle: {
             fontSize: 16,
             bold: true,
-            color: '#000'
+            color: '#000',
+            alignment: 'center'
           },
           chartArea: { left: '15%', width: '70%', height: '75%' },
           legend: { position: 'bottom', textStyle: { fontSize: 12 } },
@@ -34,7 +33,7 @@
         var pieChart = new google.visualization.PieChart(document.getElementById('donutchart'));
         pieChart.draw(pieData, pieOptions);
 
-        // Gráfico de Pizza Secundário
+        // Gráfico de Pizza Secundário para Segmentação das Reuniões
         var pieReuniaoData = google.visualization.arrayToDataTable([
           ['Tipo de Reunião', 'Quantidade'],
           ['Virtuais', 4],
@@ -46,7 +45,8 @@
           titleTextStyle: {
             fontSize: 16,
             bold: true,
-            color: '#000'
+            color: '#000',
+            alignment: 'center'
           },
           chartArea: { left: '15%', width: '70%', height: '75%' },
           legend: { position: 'bottom', textStyle: { fontSize: 12 } },
@@ -72,7 +72,8 @@
           titleTextStyle: {
             fontSize: 16,
             bold: true,
-            color: '#000'
+            color: '#000',
+            alignment: 'center'
           },
           chartArea: { left: '15%', width: '70%', height: '75%' },
           legend: { position: 'bottom', textStyle: { fontSize: 12 } },
@@ -99,12 +100,17 @@
           titleTextStyle: {
             fontSize: 16,
             bold: true,
-            color: '#000'
+            color: '#000',
+            alignment: 'center'
           },
           chartArea: { left: '15%', width: '70%', height: '60%' },
           legend: { position: 'none' },
-          hAxis: { title: 'Cidade' },
-          vAxis: { title: 'Dias' }
+          hAxis: {
+            title: 'Cidade'
+          },
+          vAxis: {
+            title: 'Dias'
+          }
         };
 
         var columnChart = new google.visualization.ColumnChart(document.getElementById('columnchart'));
@@ -122,19 +128,27 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 20px;
       }
 
       .charts-row {
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
-        gap: 20px;
-        margin-bottom: 30px;
+        gap: 8px;
+        margin-bottom: 8px;
       }
 
-      .chart-box, .column-box {
-        width: 360px;
+      .chart-box {
+        width: 320px;
+        height: 320px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .column-box {
+        width: 320px;
         height: 320px;
       }
     </style>
